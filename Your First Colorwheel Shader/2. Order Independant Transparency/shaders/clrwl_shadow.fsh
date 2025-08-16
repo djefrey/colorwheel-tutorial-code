@@ -6,14 +6,13 @@ in vec2 texcoord;
 in vec4 glcolor;
 
 /* RENDERTARGETS: 0 */
+layout(location = 0) out vec4 color;
 
 void main() {
-	vec4 color = texture(gtexture, texcoord);
+	color = texture(gtexture, texcoord);
 	vec2 lmcoord;
 	float ao;
 	vec4 overlayColor;
 
 	clrwl_computeFragment(color, color, lmcoord, ao, overlayColor);
-
-	gl_FragData[0] = color;
 }

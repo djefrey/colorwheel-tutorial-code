@@ -9,9 +9,12 @@ in vec4 glcolor;
 in vec3 normal;
 
 /* RENDERTARGETS: 0,1,2 */
+layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 lightmapData;
+layout(location = 2) out vec4 encodedNormal;
 
 void main() {
-	vec4 color = texture(gtexture, texcoord);
+	color = texture(gtexture, texcoord);
 	vec2 lmcoord;
 	float ao;
 	vec4 overlayColor;
@@ -19,7 +22,6 @@ void main() {
 	clrwl_computeFragment(color, color, lmcoord, ao, overlayColor);
 	color.rgb = mix(color.rgb, overlayColor.rgb, overlayColor.a);
 
-	gl_FragData[0] = color;
-	gl_FragData[1] = vec4(lmcoord, 0.0, 1.0);
-	gl_FragData[2] = vec4(normal * 0.5 + 0.5, 1.0);
+	lightmapData = vec4(lmcoord, 0.0, 1.0);
+	encodedNormal = vec4(normal * 0.5 + 0.5, 1.0);
 }
